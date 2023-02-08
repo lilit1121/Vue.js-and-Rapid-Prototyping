@@ -1,0 +1,150 @@
+<template>
+  <div class="home">
+    <form @submit.prevent="addTodo">
+      <input v-model="newTodo" type="text" />
+      <button type="submit">Add</button>
+    </form>
+    <ul>
+      <li
+        v-for="(todo, index) in todos"
+        :key="todo.id"
+        @dragstart="dragStart(index)"
+        @dragover="dragOver(index)"
+        @drop="drop(index)"
+      >
+        <input type="checkbox" v-model="todo.completed" />
+        {{ todo.text }}
+        <button @click.prevent="removeTodo(todo)">Remove</button>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Home",
+  data() {
+    return {
+      newTodo: "",
+      todos: [],
+    };
+  },
+  methods: {
+    addTodo() {
+      this.todos.push({
+        id: this.todos.length + 1,
+        text: this.newTodo,
+        completed: false,
+        done: false,
+      });
+      this.newTodo = "";
+    },
+    removeTodo(todo) {
+      this.todos = this.todos.filter((el) => el.id != todo.id);
+    },
+    dragStart(index) {
+      this.draggedTodo = this.todos[index];
+      this.draggedIndex = index;
+    },
+    dragOver(index) {
+      const draggedOverTodo = this.todos[index];
+      if (this.draggedTodo === draggedOverTodo) {
+        return;
+      }
+      this.todos.splice(index, 0, this.draggedTodo);
+      this.todos.splice(this.draggedIndex, 1);
+      this.draggedIndex = index;
+    },
+    drop(index) {
+      this.draggedTodo = null;
+      this.draggedIndex = null;
+    },
+  },
+};
+</script>
+<style>
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  background-color: #f1f1f1;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;<template>
+
+  <div>
+    <h2>Todo List</h2>
+    <input type="text" v-model="newTodo" @keyup.enter="addTodo">
+    <ul>
+      <li v-for="(todo, index) in todos" :key="index" @dragstart="dragStart(index)" @dragover="dragOver(index)" @drop="drop(index)">
+        <input type="checkbox" v-model="todo.done"/> {{ todo.text }}
+      </li>
+    </ul>
+  </div>
+</template>
+// JavaScript Code
+
+<script>
+export default {
+  data() {
+    return {
+      newTodo: '',
+      todos: [
+        { text: 'Learn Vue.js', done: false },
+        { text: 'Build a Todo List', done: false }
+      ]
+    }
+  },
+  methods: {
+    addTodo() {
+      this.todos.push({
+        text: this.newTodo,
+        done: false
+      });
+      this.newTodo = '';
+    },
+    dragStart(index) {
+      this.draggedTodo = this.todos[index];
+      this.draggedIndex = index;
+    },
+    dragOver(index) {
+      const draggedOverTodo = this.todos[index];
+      if (this.draggedTodo === draggedOverTodo) {
+        return;
+      }
+      this.todos.splice(index, 0, this.draggedTodo);
+      this.todos.splice(this.draggedIndex, 1);
+      this.draggedIndex = index;
+    },
+    drop(index) {
+      this.draggedTodo = null;
+      this.draggedIndex = null;
+    }
+  }
+}
+</script>
+// CSS Code
+
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  li.dragged {
+    opacity: 0.5;
+  }
+</style>
+}
+li.dragged {
+  opacity: 0.5;
+}
+</style>

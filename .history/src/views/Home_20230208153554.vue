@@ -5,9 +5,7 @@
         <input v-model="newTodo" type="text" />
         <button type="submit">Add</button>
       </form>
-      <button class="mark_unmar" @click="markUnmar">
-        {{ mark_unmar ? "Unmark" : "Mark" }}
-      </button>
+      <button class="mark_unmar" @click="markUnmar">{{mark/unmar}}</button>
     </div>
     <ul>
       <li
@@ -31,7 +29,6 @@ export default {
   name: "Home",
   data() {
     return {
-      mark_unmar: false,
       newTodo: "",
       todos: [],
       draggedTodo: null,
@@ -39,12 +36,6 @@ export default {
     };
   },
   methods: {
-    markUnmar() {
-      this.todos.sort((a, b) =>
-        this.mark_unmar ? a.completed - b.completed : b.completed - a.completed
-      );
-      this.mark_unmar = !this.mark_unmar;
-    },
     addTodo() {
       this.todos.push({
         id: Date.now(),
@@ -86,13 +77,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-button {
-  cursor: pointer;
-}
-.flex {
+.flex{
   display: flex;
 }
-.mark_unmar {
+.mark_unmar{
   margin-left: 25px;
 }
 ul {

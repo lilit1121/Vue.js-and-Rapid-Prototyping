@@ -1,14 +1,9 @@
 <template>
   <div class="home">
-    <div class="flex">
-      <form @submit.prevent="addTodo">
-        <input v-model="newTodo" type="text" />
-        <button type="submit">Add</button>
-      </form>
-      <button class="mark_unmar" @click="markUnmar">
-        {{ mark_unmar ? "Unmark" : "Mark" }}
-      </button>
-    </div>
+    <form @submit.prevent="addTodo">
+      <input v-model="newTodo" type="text" />
+      <button type="submit">Add</button>
+    </form>
     <ul>
       <li
         v-for="(todo, index) in todos"
@@ -16,7 +11,6 @@
         @dragstart="dragStart(index)"
         @dragover="dragOver(index)"
         @dragend="dragend(index)"
-        draggable="true"
       >
         <input type="checkbox" v-model="todo.completed" />
         {{ todo.text }}
@@ -31,7 +25,6 @@ export default {
   name: "Home",
   data() {
     return {
-      mark_unmar: false,
       newTodo: "",
       todos: [],
       draggedTodo: null,
@@ -39,12 +32,6 @@ export default {
     };
   },
   methods: {
-    markUnmar() {
-      this.todos.sort((a, b) =>
-        this.mark_unmar ? a.completed - b.completed : b.completed - a.completed
-      );
-      this.mark_unmar = !this.mark_unmar;
-    },
     addTodo() {
       this.todos.push({
         id: Date.now(),
@@ -57,6 +44,7 @@ export default {
       this.todos = this.todos.filter((el) => el.id != todo.id);
     },
     dragStart(index) {
+      console.log("this.todos start", this.todos);
       this.draggedTodo = this.todos[index];
       this.draggedIndex = index;
     },
@@ -64,20 +52,20 @@ export default {
       const draggedOverTodo = this.todos[index];
       if (this.draggedTodo === draggedOverTodo) {
         return;
-      } else {
-        this.draggedIndex = index;
-        return;
       }
+      // else {
+      //   console.log('+++++++');
+      //   this.todos.splice(index, 0, this.draggedTodo);
+      //   this.todos.splice(this.draggedIndex, 1);
+      //   this.draggedIndex = index;
+      //   return
+      // }
     },
     dragend(index) {
-      const draggedOverTodo = this.todos[this.draggedIndex];
-      if (this.draggedIndex < index) {
-        this.todos.splice(this.draggedIndex, 0, this.draggedTodo);
-        this.todos.splice(index + 1, 1);
-      } else if (this.draggedIndex > index) {
-        this.todos.splice(index, 0, draggedOverTodo);
-        this.todos.splice(this.draggedIndex + 1, 1);
-      }
+      this.todos.splice(this.draggedIndex, 1);
+      this.todos.splice(index, 0, this.draggedTodo);
+      console.log("this.todos end", this.todos);
+      
 
       this.draggedTodo = null;
       this.draggedIndex = null;
@@ -85,23 +73,13 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-button {
-  cursor: pointer;
-}
-.flex {
-  display: flex;
-}
-.mark_unmar {
-  margin-left: 25px;
-}
+<style>
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 li {
-  width: fit-content;
   background-color: #f1f1f1;
   padding: 10px;
   margin-bottom: 10px;

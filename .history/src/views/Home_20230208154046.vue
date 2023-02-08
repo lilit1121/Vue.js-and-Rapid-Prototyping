@@ -6,7 +6,7 @@
         <button type="submit">Add</button>
       </form>
       <button class="mark_unmar" @click="markUnmar">
-        {{ mark_unmar ? "Unmark" : "Mark" }}
+        {{ mark_unmar ? "Nnmark" : "Mark" }}
       </button>
     </div>
     <ul>
@@ -40,9 +40,6 @@ export default {
   },
   methods: {
     markUnmar() {
-      this.todos.sort((a, b) =>
-        this.mark_unmar ? a.completed - b.completed : b.completed - a.completed
-      );
       this.mark_unmar = !this.mark_unmar;
     },
     addTodo() {
