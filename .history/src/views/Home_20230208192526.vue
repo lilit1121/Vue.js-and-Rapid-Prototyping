@@ -56,7 +56,7 @@ export default {
       this.todos.sort((a, b) =>
         this.mark_unmark ? a.completed - b.completed : b.completed - a.completed
       );
-      this.mark_unmark = !this.mark_unmark;
+      this.mark_unmar = !this.mark_unmark;
     },
     addTodo() {
       this.todos.push({
@@ -131,7 +131,7 @@ button {
 .flex {
   display: flex;
 }
-.mark_unmark {
+.mark_unmar {
   margin-left: 25px;
 }
 ol{

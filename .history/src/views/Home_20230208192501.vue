@@ -9,8 +9,8 @@
           placeholder="Type something and press ENTER"
         />
       </form>
-      <button class="mark_unmark" @click="markUnmark">
-        {{ mark_unmark ? "Unmark" : "Mark" }}
+      <button class="mark_unmar" @click="markUnmark">
+        {{ mark_unmar ? "Unmark" : "Mark" }}
       </button>
     </div>
     <ol>
@@ -42,7 +42,7 @@ export default {
   name: "Home",
   data() {
     return {
-      mark_unmark: false,
+      mark_unmar: false,
       newTodo: "",
       todos: [],
       draggedTodo: null,
@@ -54,9 +54,9 @@ export default {
   methods: {
     markUnmark() {
       this.todos.sort((a, b) =>
-        this.mark_unmark ? a.completed - b.completed : b.completed - a.completed
+        this.mark_unmar ? a.completed - b.completed : b.completed - a.completed
       );
-      this.mark_unmark = !this.mark_unmark;
+      this.mark_unmar = !this.mark_unmar;
     },
     addTodo() {
       this.todos.push({
@@ -131,7 +131,7 @@ button {
 .flex {
   display: flex;
 }
-.mark_unmark {
+.mark_unmar {
   margin-left: 25px;
 }
 ol{
