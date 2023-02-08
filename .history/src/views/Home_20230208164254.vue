@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2>To do: ({{ toDoItems }})</h2>
+    <h2>To do: ({{ todos.length }})</h2>
     <div class="flex">
       <form @submit.prevent="addTodo">
         <input
@@ -32,7 +32,7 @@
       </ul>
     </ol>
     <hr />
-    <h2>Completed items: ({{ completedItems }})</h2>
+    <h2>Completed items: (0)</h2>
     <ol></ol>
   </div>
 </template>
@@ -47,8 +47,7 @@ export default {
       todos: [],
       draggedTodo: null,
       draggedIndex: null,
-      completedItems: 0,
-      toDoItems: 0,
+      CompletedItems
     };
   },
   methods: {
@@ -95,15 +94,6 @@ export default {
       this.draggedIndex = null;
     },
   },
-  watch: {
-    todos: {
-      handler(data) {
-        this.completedItems = data.filter((el) => el.completed).length;
-        this.toDoItems = data.filter((el) => !el.completed).length;
-      },
-      deep: true,
-    },
-  },
 };
 </script>
 <style lang="scss" scoped>
@@ -134,17 +124,15 @@ button {
 .mark_unmar {
   margin-left: 25px;
 }
-ol{
-  padding: 0;
-}
 ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 li {
-  width: fit-content; 
-  padding-top: 10px;
+  width: fit-content;
+  background-color: #f1f1f1;
+  padding: 10px;
   margin: 8px 0;
   border-radius: 5px;
 }

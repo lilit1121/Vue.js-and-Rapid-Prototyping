@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2>To do: ({{ toDoItems }})</h2>
+    <h2>To do: ({{ todos.length }})</h2>
     <div class="flex">
       <form @submit.prevent="addTodo">
         <input
@@ -13,8 +13,8 @@
         {{ mark_unmar ? "Unmark" : "Mark" }}
       </button>
     </div>
-    <ol>
-      <ul>
+    <ul>
+      <label>
         <li
           v-for="(todo, index) in todos"
           :key="todo.id"
@@ -23,17 +23,12 @@
           @dragend="dragend(index)"
           draggable="true"
         >
-          <label>
-            <input type="checkbox" v-model="todo.completed" />
-            <span>{{ todo.text }}</span>
-            <a class="remove" @click.prevent="removeTodo(todo)">Remove</a>
-          </label>
+          <input type="checkbox" v-model="todo.completed" />
+          {{ todo.text }}
+          <a class="remove" @click.prevent="removeTodo(todo)">Remove</a>
         </li>
-      </ul>
-    </ol>
-    <hr />
-    <h2>Completed items: ({{ completedItems }})</h2>
-    <ol></ol>
+      </label>
+    </ul>
   </div>
 </template>
 
@@ -47,8 +42,6 @@ export default {
       todos: [],
       draggedTodo: null,
       draggedIndex: null,
-      completedItems: 0,
-      toDoItems: 0,
     };
   },
   methods: {
@@ -95,15 +88,6 @@ export default {
       this.draggedIndex = null;
     },
   },
-  watch: {
-    todos: {
-      handler(data) {
-        this.completedItems = data.filter((el) => el.completed).length;
-        this.toDoItems = data.filter((el) => !el.completed).length;
-      },
-      deep: true,
-    },
-  },
 };
 </script>
 <style lang="scss" scoped>
@@ -115,16 +99,6 @@ input[type="text"] {
   padding: 10px;
   width: 200px;
 }
-label .remove {
-  display: none;
-  color: red;
-}
-label:hover .remove {
-  display: inline-block;
-  margin-left: 10px;
-  color: red;
-  opacity: 0.5;
-}
 button {
   cursor: pointer;
 }
@@ -134,18 +108,16 @@ button {
 .mark_unmar {
   margin-left: 25px;
 }
-ol{
-  padding: 0;
-}
 ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
   margin: 0;
 }
 li {
-  width: fit-content; 
-  padding-top: 10px;
-  margin: 8px 0;
+  width: fit-content;
+  background-color: #f1f1f1;
+  padding: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }
 li.dragged {

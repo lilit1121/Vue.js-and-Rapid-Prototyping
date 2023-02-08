@@ -1,12 +1,15 @@
 <template>
   <div id="app">
-    <router-view />
+    <nav>
+    
+    </nav>
+    <router-view/>
   </div>
 </template>
 
 <style lang="scss">
 body {
-  background: #20262e;
+  background: #20262E;
   padding: 20px;
   font-family: Helvetica;
 }

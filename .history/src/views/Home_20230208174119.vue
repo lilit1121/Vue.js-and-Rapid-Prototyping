@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2>To do: ({{ toDoItems }})</h2>
+    <h2>To do: ({{ todos.length }})</h2>
     <div class="flex">
       <form @submit.prevent="addTodo">
         <input
@@ -48,7 +48,7 @@ export default {
       draggedTodo: null,
       draggedIndex: null,
       completedItems: 0,
-      toDoItems: 0,
+      to: 0,
     };
   },
   methods: {
@@ -99,7 +99,6 @@ export default {
     todos: {
       handler(data) {
         this.completedItems = data.filter((el) => el.completed).length;
-        this.toDoItems = data.filter((el) => !el.completed).length;
       },
       deep: true,
     },

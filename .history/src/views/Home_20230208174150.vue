@@ -99,7 +99,7 @@ export default {
     todos: {
       handler(data) {
         this.completedItems = data.filter((el) => el.completed).length;
-        this.toDoItems = data.filter((el) => !el.completed).length;
+        this.completedItems = data.filter((el) => el.completed).length;
       },
       deep: true,
     },
